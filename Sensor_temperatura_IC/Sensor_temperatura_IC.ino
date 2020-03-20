@@ -69,7 +69,7 @@ void loop() {
 void sendToPython(float* data){ // Adicionar mais sensores  `double* data2`               
   byte* byteData = (byte*)(data);       // Sensor 1
 
-  byte buf[40] = {byteData[0], byteData[1], byteData[2], byteData[3]};
+  byte buf[4] = {byteData[0], byteData[1], byteData[2], byteData[3]};
 
   Serial.write(buf, 4);      // Buffer de x = 4(bytes) * Numero de sensores
 }
