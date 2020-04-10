@@ -4,8 +4,14 @@ import time  # importa biblioteca Time
 import matplotlib.pyplot as plt  # importa biblioteca matplotlib
 import matplotlib.animation as animation
 import mypackage.Serial_acquire as serial_acquire
+import flask
+from flask import request, render_template
+
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
 
 plt.style.use("seaborn-ticks")
+
 
 def main():
     # Codigo do usuario
@@ -16,44 +22,21 @@ def main():
 
     # Entaradas do usuario sao armazenadas nas variaveis tempo_exposicao, tempo_recuperacao e ciclos
     # --------------------------------------------------
-    class GUI_interface(Frame):
-        def __init__(self, master):
-            Frame.__init__(self, master)
-            self.grid()
-            self.create_widgets()
+    @app.route('/', methods=['GET'])   
+    def get_input():
+        return render_template('homepage.html')
 
-        def create_widgets(self):
-            self.option = tk.IntVar()
-            self.instruction = Label(self,text="Qual porta:",fg="black",font=("arial", 10, "bold"),padx=50,pady=10,bd=1,)
-            self.instruction.grid(row=0, column=0)
+    @app.route('/', methods=['POST']) 
+    def start():
+        portName = request.form['portName']
+        tempo_experiencia = request.form['tempo_experiencia']
+        filename = request.form['filename']
+        start = request.form['start']
 
-            self.instruction = Label(self,text="Tempo total experiencia:",fg="black",font=("arial", 10, "bold"),padx=30,pady=10,bd=1,)
-            self.instruction.grid(row=1, column=0)
-
-            self.instruction = Label(self,text="Nome do arquivo txt:",fg="black",font=("arial", 10, "bold"),padx=50,pady=10,bd=1,)
-            self.instruction.grid(row=2, column=0)
-
-            self.portName = Entry(self)
-            self.portName.grid(row=0, column=1, sticky=W)
-
-            self.Tempo_experiencia = Entry(self)
-            self.Tempo_experiencia.grid(row=1, column=1, sticky=W)
-
-            self.filename = Entry(self)
-            self.filename.grid(row=2, column=1, sticky=W)
-
-            self.start_button = Button(self,text="Start",command=self.start,fg="black",font=("arial", 10, "bold"),padx=50,pady=10,bd=1,)
-            self.start_button.grid(row=7, column=1, sticky=W)
-
-        def start(self):
-            portName = self.portName.get()
-            Tempo_experiencia = self.Tempo_experiencia.get()
-            filename = self.filename.get()
+        if(start == '1'):
             numPlots = 1
-
-            Tempo_experiencia = int(Tempo_experiencia)#segundos
-
-            maxPlotLength =  Tempo_experiencia # Maximo valor do eixo x do grafico (tempo) em segundos
+            tempo_experiencia = int(tempo_experiencia)#segundos
+            maxPlotLength =  tempo_experiencia # Maximo valor do eixo x do grafico (tempo) em segundos
 
             # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -63,7 +46,7 @@ def main():
                 maxPlotLength,
                 dataNumBytes,
                 numPlots,
-                Tempo_experiencia,
+                tempo_experiencia,
                 filename,)
 
             s.readSerialStart()  # Comeca o backgroundThread
@@ -95,13 +78,8 @@ def main():
             # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
             s.close()  # Para de plotar o grafico
-
-    root = Tk()
-    root.title("IC")
-    root.geometry("400x200")
-    app = GUI_interface(root)
-
-    root.mainloop()
+        return render_template('homepage.html')
+    app.run()
 
 if __name__ == "__main__":
     main()
