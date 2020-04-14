@@ -5,8 +5,9 @@ import collections
 import struct
 import copy
 import pandas as pd
-import csv
+import os
 from pathlib import Path
+import shutil
 
 class serialPlot:  # define classe serialPlot
     def __init__(
@@ -118,9 +119,14 @@ class serialPlot:  # define classe serialPlot
         self.thread.join()
         self.serialConnection.close()
         print("Disconnected...")
+        if not os.path.exists('Dados'):
+            os.makedirs('Dados')
         file_out = open(str(self.filename) + ".txt", "a")
         file_out.writelines(
-            "   Tempo       Sensor1  sensor2  \n"
+            "   Delta  \n"
         )
         file_out.writelines(self.txtData)
         file_out.close()
+
+        shutil.move("C:/Users/renzo/OneDrive/Documents/IC/IC_project/Sensor_temperatura_IC/" + self.filename + ".txt", "C:/Users/renzo/OneDrive/Documents/IC/IC_project/Sensor_temperatura_IC/Dados/" + self.filename + ".txt")
+       

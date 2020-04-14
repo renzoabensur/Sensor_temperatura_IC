@@ -7,6 +7,7 @@ import mypackage.Serial_acquire as serial_acquire
 import flask
 from flask import request, render_template
 
+
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -31,53 +32,51 @@ def main():
         portName = request.form['portName']
         tempo_experiencia = request.form['tempo_experiencia']
         filename = request.form['filename']
-        start = request.form['start']
 
-        if(start == '1'):
-            numPlots = 1
-            tempo_experiencia = int(tempo_experiencia)#segundos
-            maxPlotLength =  tempo_experiencia # Maximo valor do eixo x do grafico (tempo) em segundos
+        numPlots = 1
+        tempo_experiencia = int(tempo_experiencia)#segundos
+        maxPlotLength =  tempo_experiencia # Maximo valor do eixo x do grafico (tempo) em segundos
 
-            # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            s = serial_acquire.serialPlot(
-                portName,
-                baudRate,
-                maxPlotLength,
-                dataNumBytes,
-                numPlots,
-                tempo_experiencia,
-                filename,)
+        s = serial_acquire.serialPlot(
+            portName,
+            baudRate,
+            maxPlotLength,
+            dataNumBytes,
+            numPlots,
+            tempo_experiencia,
+            filename,)
 
-            s.readSerialStart()  # Comeca o backgroundThread
+        s.readSerialStart()  # Comeca o backgroundThread
 
-            # Comeca a plotar no grafico
-            # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            xmin = 0  # Valor minimo do X do grafico
-            xmax = maxPlotLength  # Valor maximo do X do grafico
-            ymin = 0  # Valor minimo do y do grafico
-            ymax = 50  # Valor maximo do y do grafico
-            fig = plt.figure()
-            ax = plt.axes(xlim=(xmin, xmax), ylim=(ymin, ymax))
-            ax.set_title("Projeto IC")  # Titulo do grafico
-            ax.set_xlabel("Tempo")  # Titulo do eixo x
-            ax.set_ylabel("Deta (T1-T2)")  # Titulo do eixo y
+        # Comeca a plotar no grafico
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        xmin = 0  # Valor minimo do X do grafico
+        xmax = maxPlotLength  # Valor maximo do X do grafico
+        ymin = 0  # Valor minimo do y do grafico
+        ymax = 50  # Valor maximo do y do grafico
+        fig = plt.figure()
+        ax = plt.axes(xlim=(xmin, xmax), ylim=(ymin, ymax))
+        ax.set_title("Projeto IC")  # Titulo do grafico
+        ax.set_xlabel("Tempo")  # Titulo do eixo x
+        ax.set_ylabel("Deta (T1-T2)")  # Titulo do eixo y
 
-            lineLabel = ["Delta"]
-            style = ["r-"]  # linestyles for the different plots
-            timeText = ax.text(0.50, 0.95, "", transform=ax.transAxes)
-            lines = []
-            lineValueText = []
-            for i in range(numPlots):
-                lines.append(ax.plot([], [], style[i], label=lineLabel[i])[0])
-                lineValueText.append(ax.text(0.70, 0.90 - i * 0.05, "", transform=ax.transAxes))
-            anim = animation.FuncAnimation(fig,s.getSerialData,fargs=(lines, lineValueText, lineLabel, timeText))  # Envia as variaveis para plotar o grafico
+        lineLabel = ["Delta"]
+        style = ["r-"]  # linestyles for the different plots
+        timeText = ax.text(0.50, 0.95, "", transform=ax.transAxes)
+        lines = []
+        lineValueText = []
+        for i in range(numPlots):
+            lines.append(ax.plot([], [], style[i], label=lineLabel[i])[0])
+            lineValueText.append(ax.text(0.70, 0.90 - i * 0.05, "", transform=ax.transAxes))
+        anim = animation.FuncAnimation(fig,s.getSerialData,fargs=(lines, lineValueText, lineLabel, timeText))  # Envia as variaveis para plotar o grafico
 
-            plt.legend(loc="upper left")  # Local da legenda no graafico
-            plt.show()
-            # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        plt.legend(loc="upper left")  # Local da legenda no graafico
+        plt.show()
+        # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            s.close()  # Para de plotar o grafico
+        s.close()  # Para de plotar o grafico
         return render_template('homepage.html')
     app.run()
 
