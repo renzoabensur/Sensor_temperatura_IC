@@ -5,11 +5,6 @@ body {
     background-color: lightblue;
 }
 
-h1{
-    font: 35px Arial, sans-serif;
-    margin-bottom: 50px;
-}
-
 .sansserif {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -20,14 +15,14 @@ div {
     border: 2px solid #73AD21;
     padding: 20px; 
     width: 400px;
-    height: 520px; 
+    height: 400px; 
     position: absolute;
     left: 50%;
     transform: translate(-50%);
 }
 
-.button1 {
-  border-radius: 8px;
+.button2 {
+  border-radius: 4px;
   background-color: #f4511e;
   border: none;
   color: #FFFFFF;
@@ -40,14 +35,14 @@ div {
   margin: 5px;
 }
 
-.button1 span {
+.button2 span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.button1 span:after {
+.button2 span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -56,23 +51,26 @@ div {
   transition: 0.5s;
 }
 
-.button1:hover span {
+.button2:hover span {
   padding-right: 20px;
 }
 
-.button1:hover span:after {
+.button2:hover span:after {
   opacity: 1;
   right: 0;
 }
 
+a {
+    color: white;
+}
+a:link {
+  border-radius: 4px;
+  background-color: transparent;
+}
 
-input[type=text] {
-  width: 100%;
-  padding: 10px 17px;
-  margin: 6px 0;
-  box-sizing: border-box;
-  border: 2px solid black;
-  border-radius: 10px;
+a:hover {
+  color: white;
+  background-color: transparent;
 }
 
 </style>
@@ -82,18 +80,7 @@ input[type=text] {
     
 </head>    
 <body>
-<form method="POST">
-        <p class="sansserif">Qual porta:</p>
-        <input name = "portName" placeholder="Nome da porta ..." type="text">
-
-       <p class="sansserif">Tempo total experiencia:</p>
-       <input name = "tempo_experiencia" placeholder="Tempo ..."type="text">
-
-       <p class="sansserif">Nome do arquivo txt:</p>
-       <input name = "filename" placeholder="Arquivo txt ..."type="text"><br><br><br>
-
-        <center><button type="submit" class="button1"><span>Start</span></button></center>
+        <center><button class="button2"><a href="http://127.0.0.1:5000/"><span>Back</span></a></p></center>
     </div>
-</form>
 </body>
 </html>

@@ -23,6 +23,7 @@ def main():
 
     # Entaradas do usuario sao armazenadas nas variaveis tempo_exposicao, tempo_recuperacao e ciclos
     # --------------------------------------------------
+    print("Aperte nesse link com o crtl http://127.0.0.1:5000/")
     @app.route('/', methods=['GET'])   
     def get_input():
         return render_template('homepage.html')
@@ -77,7 +78,7 @@ def main():
         # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         s.close()  # Para de plotar o grafico
-        return render_template('homepage.html')
+        return render_template('backpage.html')
     app.run()
 
 if __name__ == "__main__":
