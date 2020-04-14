@@ -7,8 +7,8 @@ import mypackage.Serial_acquire as serial_acquire
 import flask
 from flask import request, render_template
 
-
 app = flask.Flask(__name__)
+
 app.config["DEBUG"] = True
 
 plt.style.use("seaborn-ticks")
