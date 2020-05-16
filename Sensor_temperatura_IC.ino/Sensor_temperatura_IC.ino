@@ -86,21 +86,6 @@ void parse_serial() {
         command.substring(4, 9).toInt();  // Armazena em value a substring entre 4,9 do valor recebido do python
 
     switch (command[2]) {  // Casos variados da string na posicao 2
-//        case 'l': {
-//            time_liberacao_ms = value;
-//            break;
-//        }
-//
-//        case 'r': {
-//            time_recuperacao_ms = value;
-//            break;
-//        }
-//
-//        case 'c': {
-//            ciclos = value;
-//            break;
-//        }
-
         case 'o': {
             option = value;
             break;

@@ -6,6 +6,7 @@ import matplotlib.animation as animation
 import mypackage.Serial_acquire as serial_acquire
 import flask
 from flask import request, render_template
+import datetime
 
 app = flask.Flask(__name__)
 
@@ -35,8 +36,10 @@ def main():
         filename = request.form['filename']
 
         numPlots = 1
-        tempo_experiencia = int(tempo_experiencia)#segundos
-        maxPlotLength =  tempo_experiencia # Maximo valor do eixo x do grafico (tempo) em segundos
+        tempo_experiencia = int(tempo_experiencia) #segundos
+        plotInterval = 0.2 #200 ms
+        nframes = int(tempo_experiencia//plotInterval)
+        maxPlotLength = nframes   # Maximo valor do eixo x do grafico (tempo) em segundos
 
         # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -54,7 +57,7 @@ def main():
         # Comeca a plotar no grafico
         # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         xmin = 0  # Valor minimo do X do grafico
-        xmax = maxPlotLength  # Valor maximo do X do grafico
+        xmax = maxPlotLength # Valor maximo do X do grafico
         ymin = 0  # Valor minimo do y do grafico
         ymax = 50  # Valor maximo do y do grafico
         fig = plt.figure()
@@ -71,7 +74,8 @@ def main():
         for i in range(numPlots):
             lines.append(ax.plot([], [], style[i], label=lineLabel[i])[0])
             lineValueText.append(ax.text(0.70, 0.90 - i * 0.05, "", transform=ax.transAxes))
-        anim = animation.FuncAnimation(fig,s.getSerialData,fargs=(lines, lineValueText, lineLabel, timeText))  # Envia as variaveis para plotar o grafico
+        anim = animation.FuncAnimation(fig,s.getSerialData,fargs=(lines, lineValueText, lineLabel, timeText), frames = nframes, repeat = False)  # Envia as variaveis para plotar o grafico
+
 
         plt.legend(loc="upper left")  # Local da legenda no graafico
         plt.show()
