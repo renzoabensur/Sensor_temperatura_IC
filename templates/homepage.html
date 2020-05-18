@@ -20,7 +20,7 @@ div {
     border: 2px solid #73AD21;
     padding: 20px; 
     width: 500px;
-    height: 600px; 
+    height: 700px; 
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -90,6 +90,20 @@ input[type=text] {
   display: none; /*hide original SELECT element:*/
 }
 
+.option2 {
+  border-radius: 8px;
+  padding: 9px 195px;
+  box-sizing: border-box;
+  border: 2px solid black; 
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:white;
+}
+
+.option2 select {
+  display: none; /*hide original SELECT element:*/
+}
+
 
 </style>
 <head>
@@ -120,7 +134,7 @@ input[type=text] {
         </select>  
 
         <p class="sansserif">Expressar tempo no arquivo txt em:</p>
-        <select name="expressar tempo" class="option1">
+        <select name="expressar tempo" class="option2">
             <option value = "1">Segundos</option>
             <option value = "2">Milissegundos</option>
         </select> 
