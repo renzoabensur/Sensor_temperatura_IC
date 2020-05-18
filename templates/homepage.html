@@ -75,6 +75,22 @@ input[type=text] {
   border-radius: 10px;
 }
 
+/*the container must be positioned relative:*/
+.option1 {
+  border-radius: 8px;
+  padding: 9px 215px;
+  box-sizing: border-box;
+  border: 2px solid black; 
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:white;
+}
+
+.option1 select {
+  display: none; /*hide original SELECT element:*/
+}
+
+
 </style>
 <head>
     <div>
@@ -86,11 +102,31 @@ input[type=text] {
         <p class="sansserif">Qual porta:</p>
         <input name = "portName" placeholder="Nome da porta ..." type="text">
 
-       <p class="sansserif">Tempo total experiencia:</p>
+       <p class="sansserif">Tempo total da experiencia (s):</p>
        <input name = "tempo_experiencia" placeholder="Tempo ..."type="text">
 
-       <p class="sansserif">Intervalo entre plots do grafico em milisegundos:</p>
-       <input name = "plotInterval" placeholder="Intervalo..."type="text">
+       <p class="sansserif">Potencia do resistor de temperatura (Potencia maxima do resistor 10 Watts):</p>
+        <select name="potencia" class="option1">
+            <option value = "1">1 Watt</option>
+            <option value = "2">2 Watt</option>
+            <option value = "3">3 Watt</option>
+            <option value = "4">4 Watt</option>
+            <option value = "5">5 Watt</option>
+            <option value = "6">6 Watt</option>
+            <option value = "7">7 Watt</option>
+            <option value = "8">8 Watt</option>
+            <option value = "9">9 Watt</option>
+            <option value = "10">10 Watt</option>
+        </select>  
+
+        <p class="sansserif">Expressar tempo no arquivo txt em:</p>
+        <select name="expressar tempo" class="option1">
+            <option value = "1">Segundos</option>
+            <option value = "2">Milissegundos</option>
+        </select> 
+
+       <p class="sansserif">Intervalo entre plots do grafico (ms):</p>
+       <input name = "plotInterval" placeholder="Intervalo minimo 200 ms..."type="text">
 
        <p class="sansserif">Nome do arquivo txt:</p>
        <input name = "filename" placeholder="Arquivo txt ..."type="text"><br><br><br>
